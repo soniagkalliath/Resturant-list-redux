@@ -22,10 +22,10 @@ function Home() {
     }
   return (
     <>
-        <div className="d-flex text-center w-75 m-5">
+        {/* <div className="d-flex text-center w-75 m-5">
             <input onChange={(e)=>searchRest(e.target.value)} type="text" className='form-control' placeholder='Search restuarant by Cities' />
             <button>search</button>
-        </div>
+        </div> */}
         <Row>
           {
             allRestuarant?.length>0?allRestuarant?.map(restuarant=>(
