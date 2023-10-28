@@ -10,18 +10,27 @@ const restuarantSlice = createSlice({
     initialState:{
         loading:false,
         restuarants:[],
-        error:""
+        restContainer:[],
+        error:"",
+        restPerPage:6,
+        currentPage:1
     },
     reducers:{
-        search:(state,payload)=>{
-            // if(payload){
-            //     state.restuarants = payload
-                
-            // }else{
-            //     return state.restuarants
-            // }
-           
-        }
+        search:(state,action)=>{
+           state.restuarants = state.restContainer.filter(item=>item.neighborhood.toLowerCase().includes(action.payload))  
+        },
+        onNavigateNext:(state)=>{
+            state.currentPage++
+        },
+        onNavigatePrev:(state)=>{
+            state.currentPage--
+        },
+        // onChangeRestPerPage:(state,action)=>{
+        //     state.restPerPage = action.payload
+        // },
+        // onClickRestPerPage:(state,action)=>{
+        //     state.currentPage = action.payload
+        // }
     },
     extraReducers:(builder)=>{
         builder.addCase(fetchRestuarants.pending,(state)=>{
@@ -30,6 +39,7 @@ const restuarantSlice = createSlice({
         builder.addCase(fetchRestuarants.fulfilled, (state,action)=>{
             state.loading = false
             state.restuarants = action.payload
+            state.restContainer = action.payload
             state.error=''
         })
         builder.addCase(fetchRestuarants.rejected, (state,action)=>{
@@ -39,5 +49,5 @@ const restuarantSlice = createSlice({
         })
     }
 })
-export const {search} = restuarantSlice.actions
+export const {search,onNavigateNext,onNavigatePrev} = restuarantSlice.actions
 export default restuarantSlice.reducer
